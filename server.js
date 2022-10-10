@@ -10,10 +10,13 @@ const UsersRouter = require('./routes/users')
 const OrdersRouter = require('./routes/orders')
 const PitchesRouter = require('./routes/pitches')
 
-mongoose.connect(mongoString, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+mongoose.connect(
+  'mongodb+srv://thanhdat:011197@cluster0.mynh27c.mongodb.net/?retryWrites=true&w=majority',
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+)
 const database = mongoose.connection
 
 database.on('error', (error) => {
