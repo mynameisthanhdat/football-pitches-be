@@ -20,6 +20,38 @@ const getOrders = async (req, res) => {
   }
 }
 
+const getOrdersByUserId = async (req, res) => {
+  try {
+    const userId = req.params.id
+    const filter = {
+      $and: [
+        {
+          userId: {
+            $regex: userId,
+            $options: '$i',
+          },
+        },
+      ],
+    }
+    const orders = await Orders.find(filter)
+    if (orders.length > 0) {
+      res.status(200).json({
+        total: orders.length,
+        orders: orders.reverse(),
+      })
+    } else {
+      res.status(200).json({
+        message: 'No results',
+        orders,
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: 'An error Occurred!',
+    })
+  }
+}
+
 const getOrderById = (req, res) => {
   try {
     const id = req.params.id
@@ -50,28 +82,6 @@ const addOrder = async (req, res) => {
       message: 'An error Occurred!',
     })
   }
-  // const {
-  //   customerName,
-  //   phone,
-  //   pitchId,
-  //   pitchName,
-  //   pitchSize,
-  //   timeOrder,
-  //   dateOrder,
-  //   userId,
-  // } = req.body
-  // if (
-  //   !customerName ||
-  //   !phone ||
-  //   !pitchId ||
-  //   !pitchName ||
-  //   !pitchSize ||
-  //   !timeOrder ||
-  //   !dateOrder ||
-  //   !userId
-  // ) {
-  //   res.status(400).json({ message: 'Some field not null' })
-  // }
 }
 
 const editOrder = (req, res) => {
@@ -96,6 +106,7 @@ const editOrder = (req, res) => {
 module.exports = {
   getOrders,
   getOrderById,
+  getOrdersByUserId,
   addOrder,
   editOrder,
 }
