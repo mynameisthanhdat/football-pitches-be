@@ -68,16 +68,13 @@ const getOrderById = (req, res) => {
 }
 
 const addOrder = async (req, res) => {
-  console.log('REQ: ', req.body)
   try {
     let order = new Orders(req.body)
-    console.log('ORDERS: ', order)
     await order.save()
     await res.status(200).json({
       message: 'Add order successfully!',
     })
   } catch (error) {
-    console.log('ERROR: ', error)
     res.status(500).json({
       message: 'An error Occurred!',
     })
