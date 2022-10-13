@@ -78,7 +78,6 @@ const editPitch = (req, res) => {
 }
 
 const removePitch = (req, res) => {
-  console.log('req.params.id: ', req.params.id)
   try {
     let id = req.params.id
     Pitches.findByIdAndRemove(id).then(() => {
