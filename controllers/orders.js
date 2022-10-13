@@ -103,10 +103,26 @@ const editOrder = (req, res) => {
   }
 }
 
+const removeOrder = (req, res) => {
+  try {
+    let id = req.params.id
+    Orders.findByIdAndRemove(id).then(() => {
+      res.json({
+        message: 'Order Deleted Successfully!',
+      })
+    })
+  } catch (error) {
+    res.json({
+      message: 'Order Deleted Unsuccessfully!',
+    })
+  }
+}
+
 module.exports = {
   getOrders,
   getOrderById,
   getOrdersByUserId,
   addOrder,
   editOrder,
+  removeOrder,
 }
